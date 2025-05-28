@@ -9,17 +9,12 @@ DiscordのOAuth2認証でOIDCログインできるようにするくん。
 
 ### Usage
 
-1. このリポジトリをcloneする
-2. `pnpm install`
-3. `pnpx wrangler kv:namespace create "AUTH_KV"`
-4. `pnpx wrangler deploy`
-5. wrangler.jsoncにKVのIDとかISSUREに4で出たUrlをいれる
-5. DiscordのOAuth2をとってくる
-6. `ssh-keygen -t rsa -b 4096 -f jwtRS256.pem -m PKCS8`
-7. `wrangler secret put DISCORD_CLIENT_ID`
-8. `wrangler secret put DISCORD_CLIENT_SECRET`
-9. `wrangler secret put JWT_PRIVATE_KEY`
-10. `wrangler secret put JWT_PUBLIC_KEY`
-11. `wrangler deploy`
-
-よし。
+1. `pnpx wrangler kv:namespace create "AUTH_KV"`を実行してKVを作成する
+2. 出てきたIDで`wrangler.jsonc`の`<YOUR_KV_NAMESPACE_ID>`を置換する。
+3. 一度`pnpx deploy`する
+4. 出てきたデプロイ先Url(`https://hoge.workers.dev`)で`wrangler.jsonc`の`https://<YOUR_WORKERS>.workers.dev`を置換する
+5. OIDCを使うアプリにクライアントIDがあれば`<OIDC_AUDIENCE>`を置換する。
+6. [Discord Developer Portal](https://discord.com/developers/applications)でApplicationを作成する
+7. OAuth2のClient IDとClient Secretを控える
+8. `deploy.sh`を実行し、指示に従ってClient IDとClient Secretを入力する
+9. 完成
