@@ -1,6 +1,9 @@
 {
-	"name": "discord-oidc-wrapper",
-	"version": "0.0.0",
+	"name": "discord-oidc-proxy",
+	"version": "1.0.0",
+	"author": {
+		"name": "taiseiue",
+		"email": "taiseiue@wsnet.jp"},
 	"private": true,
 	"scripts": {
 		"deploy": "wrangler deploy",

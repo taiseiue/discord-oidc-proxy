@@ -4,7 +4,7 @@
  */
 {
 	"$schema": "node_modules/wrangler/config-schema.json",
-	"name": "discord-oidc-wrapper",
+	"name": "discord-oidc-proxy",
 	"main": "src/index.ts",
 	"compatibility_date": "2025-05-24",
 	"observability": {

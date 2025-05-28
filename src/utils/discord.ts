@@ -28,7 +28,7 @@ export const getDiscordUserInfo = async (token: string): Promise<DiscordUser> =>
 	const response = await fetch('https://discord.com/api/users/@me', {
 		headers: {
 			Authorization: `Bearer ${token}`,
-			'User-Agent': 'discord-oidc-wrapper',
+			'User-Agent': 'discord-oidc-proxy',
 		},
 	});
 
