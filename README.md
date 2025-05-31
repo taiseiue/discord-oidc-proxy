@@ -1,5 +1,9 @@
-# Discord OIDC Wrapper
-The wrapper Discord OAuth to OpenID Connect (OIDC)
+# Discord OIDC Proxy
+The proxy that enables applications using OpenID Connect (OIDC) authentication to authenticate users through Discord's OAuth2 system.
+
+|       |        |
+|-------|--------|
+|English|[Japanese](./README-ja.md)|
 
 Cloudflare Workers + Hono + pnpm
 
