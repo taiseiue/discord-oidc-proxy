@@ -22,10 +22,14 @@ tokenRoutes.post('/token', async (c) => {
 		throw new HTTPException(400, { message: 'Missing code' });
 	}
 
-	try {
-		const appContext = createAppContextFromBindings(c.env);
-		const tokenService = new TokenService(appContext);
+	const appContext = createAppContextFromBindings(c.env);
+	// クライアントの検証
+	if (body.client_id !== appContext.config.oidcAudience || body.client_secret !== appContext.config.oidcClientSecret) {
+		throw new HTTPException(401, { message: `Invalid client credentials.` });
+	}
 
+	try {
+		const tokenService = new TokenService(appContext);
 		const tokenResponse = await tokenService.exchangeCodeForToken(code);
 
 		return c.json(tokenResponse);

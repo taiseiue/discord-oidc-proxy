@@ -33,6 +33,7 @@ export function createAppContextFromBindings(env: Bindings, waitUntil?: (promise
 	const config: IAppConfig = {
 		oidcIssuer: env.OIDC_ISSUER,
 		oidcAudience: env.OIDC_AUDIENCE,
+		oidcClientSecret: env.OIDC_CLIENT_SECRET,
 		discordClientId: env.DISCORD_CLIENT_ID,
 		discordClientSecret: env.DISCORD_CLIENT_SECRET,
 		jwtPrivateKey: env.JWT_PRIVATE_KEY,

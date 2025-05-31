@@ -20,11 +20,14 @@ authRoutes.get('/authorize', async (c) => {
 
 	try {
 		const appContext = createAppContextFromBindings(c.env, c.executionCtx.waitUntil.bind(c.executionCtx));
-		const authService = new AuthService(appContext);
+		// クライアントの検証(この時点ではクライアントIDのみを検証)
+		if (params.client_id !== appContext.config.oidcAudience) {
+			throw new HTTPException(401, { message: `Invalid client credentials.` });
+		}
 
+		const authService = new AuthService(appContext);
 		const result = await authService.handleAuthorizeRequest({
 			response_type: params.response_type,
-			client_id: params.client_id,
 			redirect_uri: params.redirect_uri,
 			scope: params.scope,
 			state: params.state,

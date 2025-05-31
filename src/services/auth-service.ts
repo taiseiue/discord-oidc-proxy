@@ -14,16 +14,10 @@ export class AuthService {
 	 */
 	async handleAuthorizeRequest(params: {
 		response_type: string;
-		client_id: string;
 		redirect_uri: string;
 		scope: string;
 		state: string;
 	}): Promise<{ redirectUrl: string; sessionId: string }> {
-		// Client IDの検証
-		if (params.client_id !== this.context.config.oidcAudience) {
-			throw new Error('Invalid client_id');
-		}
-
 		const sessionId = crypto.randomUUID();
 
 		// Discordの認証URLを作る

@@ -11,6 +11,8 @@ export interface IKeyValueStorage {
  * 環境設定
  * @property {string} oidcIssuer OIDC発行元
  * @property {string} oidcAudience OIDCオーディエンス
+ * @property {string} oidcClientId OIDCのクライアントID
+ * @property {string} oidcClientSecret OIDCのクライアントシークレット
  * @property {string} discordClientId DiscordのOAuthクライアントID
  * @property {string} discordClientSecret DiscordのOAuthクライアントシークレット
  * @property {string} jwtPrivateKey JWTの秘密鍵
@@ -19,6 +21,7 @@ export interface IKeyValueStorage {
 export interface IAppConfig {
 	oidcIssuer: string;
 	oidcAudience: string;
+	oidcClientSecret: string;
 	discordClientId: string;
 	discordClientSecret: string;
 	jwtPrivateKey: string;
@@ -47,6 +50,7 @@ export type Bindings = {
 	OIDC_ISSUER: string;
 	OIDC_AUDIENCE: string;
 	// シークレット
+	OIDC_CLIENT_SECRET: string;
 	DISCORD_CLIENT_ID: string;
 	DISCORD_CLIENT_SECRET: string;
 	// JWTの秘密鍵と公開鍵
