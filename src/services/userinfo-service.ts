@@ -27,6 +27,7 @@ export class UserInfoService {
 			picture: `https://cdn.discordapp.com/avatars/${discordUser.id}/${discordUser.avatar}.png`,
 			email: discordUser.email,
 			email_verified: discordUser.verified,
+			locale: discordUser.locale,
 		};
 
 		return claims;

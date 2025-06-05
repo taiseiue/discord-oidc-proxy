@@ -74,6 +74,10 @@ export type StoredTokenData = {
  * @property {string} id ユーザーID
  * @property {string} username ユーザー名(一意ではない)
  * @property {string|null} global_name グローバル名(一意の名前、存在しない場合はnull)
+ * @property {string} avatar アバターのハッシュ
+ * @property {string} email メールアドレス
+ * @property {boolean} verified メールアドレスが検証済みかどうか
+ * @property {string} locale ユーザーのロケール
  */
 export type DiscordUser = {
 	id: string;
@@ -82,6 +86,7 @@ export type DiscordUser = {
 	avatar: string;
 	email: string;
 	verified?: boolean;
+	locale?: string;
 };
 
 export type DiscordTokenResponse = {
