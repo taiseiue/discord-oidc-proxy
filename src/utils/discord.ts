@@ -9,7 +9,7 @@ import { DiscordTokenResponse, DiscordUser } from '../types';
  * @returns {URL} Discordの認証Url
  */
 export const createDiscordAuthUrl = (clientId: string, oidcIssuer: string, sessionId: string): URL => {
-	const url = new URL('https://discord.com/api/oauth2/authorize');
+	const url = new URL('https://discord.com/api/v10/oauth2/authorize');
 	url.searchParams.set('client_id', clientId);
 	url.searchParams.set('redirect_uri', `${oidcIssuer}/callback`);
 	url.searchParams.set('response_type', 'code');
@@ -25,7 +25,7 @@ export const createDiscordAuthUrl = (clientId: string, oidcIssuer: string, sessi
  * @returns {Promise<DiscordUser>} ユーザー情報
  */
 export const getDiscordUserInfo = async (token: string): Promise<DiscordUser> => {
-	const response = await fetch('https://discord.com/api/users/@me', {
+	const response = await fetch('https://discord.com/api/v10/users/@me', {
 		headers: {
 			Authorization: `Bearer ${token}`,
 			'User-Agent': 'discord-oidc-proxy',
@@ -51,7 +51,7 @@ export const exchangeDiscordCode = async (
 	clientSecret: string,
 	redirectUri: string
 ): Promise<DiscordTokenResponse> => {
-	const response = await fetch('https://discord.com/api/oauth2/token', {
+	const response = await fetch('https://discord.com/api/v10/oauth2/token', {
 		method: 'POST',
 		headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
 		body: new URLSearchParams({
