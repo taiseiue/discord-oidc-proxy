@@ -41,6 +41,11 @@ echo $DISCORD_CLIENT_ID | pnpx wrangler secret put DISCORD_CLIENT_ID
 echo $DISCORD_CLIENT_SECRET | pnpx wrangler secret put DISCORD_CLIENT_SECRET
 cat keys/jwtRS256 | pnpx wrangler secret put JWT_PRIVATE_KEY
 cat keys/jwtRS256.pub | pnpx wrangler secret put JWT_PUBLIC_KEY
+if [[ "$(uname)" == "Darwin" ]]; then
+  sed -i "" 's/"OIDC_AUDIENCE": "[^"]*"/"OIDC_AUDIENCE": "'"${OIDC_CLIENT_ID}"'"/g' "config.jsonc"
+else
+  sed -i 's/"OIDC_AUDIENCE": "[^"]*"/"OIDC_AUDIENCE": "'"${OIDC_CLIENT_ID}"'"/g' "config.jsonc"
+fi
 
 echo;
 
@@ -67,20 +72,15 @@ echo "*                                   [ Next Steps ]                        
 echo "* 1. You will use this Client ID and Client Secret to configure your client application*"
 echo "*     (e.g., in the Cloudflare ZeroTrust provider settings screen)                     *"
 echo "*     that utilizes this OIDC provider.                                                *"
-echo "* 2. You will be to set the OIDC_AUDIENCE in wrangler.jsonc file.                      *"
-echo "*        \"vars\": {                                                                     *"
-echo "*      -   \"OIDC_AUDIENCE\": \"<YOUR_OIDC_AUDIENCE>\",                                    *"
-echo "*      +   \"OIDC_AUDIENCE\": \""$OIDC_CLIENT_ID"\",                        *"
-echo "*        }                                                                             *"
-echo "* 3. Deploy once.                                                                      *"
+echo "* 2. Deploy once.                                                                      *"
 echo "*     Use the command: \`pnpm install && pnpm release\`                                   *"
 echo "*     Make a note of the URL of the publish target. (e.g., https://***.***.workers.dev)*"
-echo "* 4. You will be to set the OIDC_ISSUER in wrangler.jsonc file.                        *"
+echo "* 3. You will be to set the OIDC_ISSUER in wrangler.jsonc file.                        *"
 echo "*        \"vars\": {                                                                     *"
 echo "*      -   \"OIDC_ISSUER\": \"https://<YOUR_WORKERS>.workers.dev\",                        *"
 echo "*      +   \"OIDC_ISSUER\": \"<NOTED_URL>\",                                               *"
 echo "*        }                                                                             *"
-echo "* 5. Final deploy                                                                      *"
+echo "* 4. Final deploy                                                                      *"
 echo "*     Use the command: \`pnpm release\`                                                  *"
 echo "*                                                                                      *"
 echo "* Congratulations! You are now ready to use the OIDC Proxy! 🎉                         *"
