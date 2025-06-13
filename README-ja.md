@@ -75,3 +75,11 @@ AWS Cognitoの認証方法としてDiscordを使うには、Cognito>ユーザー
 属性のリクエストメソッド|POST
 セットアップ方法|発行者 URL を通じた自動入力
 発行者 URL|デプロイ先Url
+
+## Security
+このソフトウェアでセキュリティ上の脆弱性を発見された場合は、IssueやPull Requestを作成しないでください。 代わりに、以下のいずれかの方法でご報告ください。
+
+- GitHubの[Security Advisory](https://github.com/taiseiue/discord-oidc-proxy/security/advisories)に投稿する
+- taiseiue@wsnet.jp 宛に直接連絡する（PGP鍵は[OpenPGP](https://keys.openpgp.org/search?q=0D2E1F9F051058B2B360B34DA25AD3BFB865EC1E)から入手できます）
+
+セキュリティ脆弱性に関するIssueが作成された場合、その内容は受理しますが、該当のIssueは削除します。

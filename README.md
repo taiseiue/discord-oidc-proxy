@@ -75,3 +75,11 @@ Authorized scope|openid email profile identify
 Attribute request method|POST
 Setup method|Automatic input via issuer URL
 Issuer URL|Deployment destination URL
+
+## Security
+If you discover a security vulnerability in this software, please do NOT create an Issue or Pull Request. Instead, please report it using one of the following methods:
+
+- Post GitHub's [Security Advisory](https://github.com/taiseiue/discord-oidc-proxy/security/advisories)
+- Contact taiseiue@wsnet.jp directly (PGP key available from [OpenPGP](https://keys.openpgp.org/search?q=0D2E1F9F051058B2B360B34DA25AD3BFB865EC1E))
+
+If an Issue related to a security vulnerability is created, the information will be saved, but the Issue itself will be deleted.
