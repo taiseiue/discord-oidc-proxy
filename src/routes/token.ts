@@ -11,8 +11,8 @@ import { TokenRequestBodySchema } from '../schemas/token.schema';
 export const tokenRoutes = new Hono<{ Bindings: Bindings }>();
 
 // トークン交換
-tokenRoutes.post('/token', vValidator('json', TokenRequestBodySchema), async (c) => {
-	const body = c.req.valid('json');
+tokenRoutes.post('/token', vValidator('form', TokenRequestBodySchema), async (c) => {
+	const body = c.req.valid('form');
 
 	const appContext = createAppContextFromBindings(c.env);
 	// クライアントの検証

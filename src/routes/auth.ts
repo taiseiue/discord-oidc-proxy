@@ -10,8 +10,8 @@ import { AuthorizeRequestBodySchema, CallbackRequestBodySchema } from '../schema
 export const authRoutes = new Hono<{ Bindings: Bindings }>();
 
 // 承認
-authRoutes.get('/authorize', vValidator('json', AuthorizeRequestBodySchema), async (c) => {
-	const params = c.req.valid('json');
+authRoutes.get('/authorize', vValidator('query', AuthorizeRequestBodySchema), async (c) => {
+	const params = c.req.valid('query');
 
 	try {
 		const appContext = createAppContextFromBindings(c.env, c.executionCtx.waitUntil.bind(c.executionCtx));
@@ -39,8 +39,8 @@ authRoutes.get('/authorize', vValidator('json', AuthorizeRequestBodySchema), asy
 
 // callback
 // Discordからトークンを受け取る
-authRoutes.get('/callback', vValidator('json', CallbackRequestBodySchema), async (c) => {
-	const params = c.req.valid('json');
+authRoutes.get('/callback', vValidator('query', CallbackRequestBodySchema), async (c) => {
+	const params = c.req.valid('query');
 
 	try {
 		const appContext = createAppContextFromBindings(c.env);
