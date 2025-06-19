@@ -20,12 +20,26 @@ echo "Press [Enter] to continue, or [Ctrl+C] to exit..."
 read
 echo ""
 
+if [ -e './wrangler.jsonc' ]; then
+  echo "A configuration file already exists. "
+  echo -n "Would you want to Continue? [y/N]: "
+  read ANS
+  case $ANS in
+    [Yy]* )
+      ;;
+    * )
+      exit
+      ;;
+  esac
+fi
+
 
 echo -n DISCORD_CLIENT_ID:
 read DISCORD_CLIENT_ID
 echo -n DISCORD_CLIENT_SECRET:
 read DISCORD_CLIENT_SECRET
-
+echo -n WORKERS_KV_NAMESPACE_ID:
+read WORKERS_KV_NAMESPACE_ID
 
 echo '[1/2] Making certificates...'
 (cd keys && ssh-keygen -q -t rsa -b 2048 -f jwtRS256 -m PKCS8 -N "" && ssh-keygen -q -f jwtRS256 -e -m PKCS8 > jwtRS256.pub)
@@ -36,15 +50,23 @@ echo 'Done!'
 
 echo;
 echo '[2/3] Configuring...'
+cp -f ./wrangler.jsonc.template ./wrangler.jsonc
 echo $OIDC_CLIENT_SECRET | pnpx wrangler secret put OIDC_CLIENT_SECRET
 echo $DISCORD_CLIENT_ID | pnpx wrangler secret put DISCORD_CLIENT_ID
 echo $DISCORD_CLIENT_SECRET | pnpx wrangler secret put DISCORD_CLIENT_SECRET
 cat keys/jwtRS256 | pnpx wrangler secret put JWT_PRIVATE_KEY
 cat keys/jwtRS256.pub | pnpx wrangler secret put JWT_PUBLIC_KEY
+
 if [[ "$(uname)" == "Darwin" ]]; then
-  sed -i "" 's/"OIDC_AUDIENCE": "[^"]*"/"OIDC_AUDIENCE": "'"${OIDC_CLIENT_ID}"'"/g' "config.jsonc"
+  sed -i "" 's/"id": "[^"]*"/"id": "'"${WORKERS_KV_NAMESPACE_ID}"'"/g' "wrangler.jsonc"
 else
-  sed -i 's/"OIDC_AUDIENCE": "[^"]*"/"OIDC_AUDIENCE": "'"${OIDC_CLIENT_ID}"'"/g' "config.jsonc"
+  sed -i 's/"id": "[^"]*"/"id": "'"${WORKERS_KV_NAMESPACE_ID}"'"/g' "wrangler.jsonc"
+fi
+
+if [[ "$(uname)" == "Darwin" ]]; then
+  sed -i "" 's/"OIDC_AUDIENCE": "[^"]*"/"OIDC_AUDIENCE": "'"${OIDC_CLIENT_ID}"'"/g' "wrangler.jsonc"
+else
+  sed -i 's/"OIDC_AUDIENCE": "[^"]*"/"OIDC_AUDIENCE": "'"${OIDC_CLIENT_ID}"'"/g' "wrangler.jsonc"
 fi
 
 echo;
