@@ -48,7 +48,7 @@ authRoutes.get('/callback', vValidator('json', CallbackRequestBodySchema), async
 
 		const result = await authService.handleCallbackRequest({
 			code: params.code,
-			sessionId: params.sessionId,
+			sessionId: params.state,
 		});
 
 		return c.redirect(result.redirectUrl);

@@ -10,5 +10,5 @@ export const AuthorizeRequestBodySchema = object({
 
 export const CallbackRequestBodySchema = object({
 	code: string(),
-	sessionId: string(),
+	state: string(),
 });

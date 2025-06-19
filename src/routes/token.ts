@@ -16,6 +16,7 @@ tokenRoutes.post('/token', vValidator('json', TokenRequestBodySchema), async (c)
 
 	const appContext = createAppContextFromBindings(c.env);
 	// クライアントの検証
+	// シークレットは機密なので、タイミングセーフな比較をする
 	if (body.client_id !== appContext.config.oidcAudience || !timingSafeStringEqual(body.client_secret, appContext.config.oidcClientSecret)) {
 		throw new HTTPException(401, { message: `Invalid client credentials.` });
 	}

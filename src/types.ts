@@ -59,8 +59,8 @@ export type Bindings = {
 };
 
 export type StoredSessionData = {
-	cognitoState: string;
-	cognitoRedirectUri: string;
+	sessionState: string;
+	sessionRedirectUri: string;
 };
 
 export type StoredTokenData = {
