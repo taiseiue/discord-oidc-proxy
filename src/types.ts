@@ -96,3 +96,14 @@ export type DiscordTokenResponse = {
 	refresh_token?: string;
 	scope?: string;
 };
+
+/**
+ * トークンエンドポイントへのリクエストボディ
+ */
+export type TokenRequestBody = {
+	grant_type: 'authorization_code';
+	code: string;
+	client_id: string;
+	client_secret: string;
+	redirect_uri?: string;
+};

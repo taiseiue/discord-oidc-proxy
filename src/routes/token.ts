@@ -1,15 +1,16 @@
 import { Hono } from 'hono';
 import { HTTPException } from 'hono/http-exception';
-import { Bindings } from '../types';
+import { Bindings, TokenRequestBody } from '../types';
 import { createAppContextFromBindings } from '../adapters/cloudflare';
 import { TokenService } from '../services/token-service';
+import { timingSafeStringEqual } from '../utils/crypto';
 
 // トークン関連
 export const tokenRoutes = new Hono<{ Bindings: Bindings }>();
 
 // トークン交換
 tokenRoutes.post('/token', async (c) => {
-	const body = await c.req.parseBody();
+	const body = (await c.req.parseBody()) as unknown as Partial<TokenRequestBody>;
 
 	// grant_typeの検証
 	if (body.grant_type !== 'authorization_code') {
@@ -17,14 +18,18 @@ tokenRoutes.post('/token', async (c) => {
 	}
 
 	// codeの検証
-	const code = body.code as string;
-	if (!code) {
+	if (!body.code) {
 		throw new HTTPException(400, { message: 'Missing code' });
 	}
+	const code = body.code;
 
 	const appContext = createAppContextFromBindings(c.env);
 	// クライアントの検証
-	if (body.client_id !== appContext.config.oidcAudience || body.client_secret !== appContext.config.oidcClientSecret) {
+	if (
+		!body.client_id ||
+		body.client_id !== appContext.config.oidcAudience ||
+		!timingSafeStringEqual(body.client_secret, appContext.config.oidcClientSecret)
+	) {
 		throw new HTTPException(401, { message: `Invalid client credentials.` });
 	}
 
