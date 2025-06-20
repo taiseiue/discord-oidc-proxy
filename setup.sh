@@ -22,7 +22,7 @@ echo ""
 
 if [ -e './wrangler.jsonc' ]; then
   echo "A configuration file already exists. "
-  echo -n "Would you want to Continue? [y/N]: "
+  echo -n "Would you like to continue? [y/N]: "
   read ANS
   case $ANS in
     [Yy]* )
