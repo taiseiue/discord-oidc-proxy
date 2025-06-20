@@ -25,8 +25,8 @@ export class AuthService {
 
 		// セッションを保存
 		const sessionData: StoredSessionData = {
-			cognitoState: params.state,
-			cognitoRedirectUri: params.redirect_uri,
+			sessionState: params.state,
+			sessionRedirectUri: params.redirect_uri,
 		};
 
 		const storagePromise = this.context.storage.put(sessionId, JSON.stringify(sessionData), { expirationTtl: SESSION_EXPIRATION_TTL });
@@ -57,7 +57,7 @@ export class AuthService {
 		await this.context.storage.delete(params.sessionId);
 
 		const storedState = JSON.parse(storedStateJson) as StoredSessionData;
-		const { cognitoState, cognitoRedirectUri } = storedState;
+		const { sessionState, sessionRedirectUri } = storedState;
 
 		const discordTokenData = await exchangeDiscordCode(
 			params.code,
@@ -77,9 +77,9 @@ export class AuthService {
 
 		await this.context.storage.put(oidcCode, JSON.stringify(tokenData), { expirationTtl: SESSION_EXPIRATION_TTL });
 
-		const finalRedirectUrl = new URL(cognitoRedirectUri);
+		const finalRedirectUrl = new URL(sessionRedirectUri);
 		finalRedirectUrl.searchParams.set('code', oidcCode);
-		finalRedirectUrl.searchParams.set('state', cognitoState);
+		finalRedirectUrl.searchParams.set('state', sessionState);
 
 		return {
 			redirectUrl: finalRedirectUrl.toString(),

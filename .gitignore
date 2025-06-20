@@ -173,3 +173,4 @@ dist
 
 keys/*
 !keys/.gitkeep
+wrangler.jsonc

@@ -3,20 +3,15 @@ import { HTTPException } from 'hono/http-exception';
 import { Bindings } from '../types';
 import { createAppContextFromBindings } from '../adapters/cloudflare';
 import { AuthService } from '../services/auth-service';
+import { vValidator } from '@hono/valibot-validator';
+import { AuthorizeRequestBodySchema, CallbackRequestBodySchema } from '../schemas/auth.schema';
 
 // 認証関連
 export const authRoutes = new Hono<{ Bindings: Bindings }>();
 
 // 承認
-authRoutes.get('/authorize', async (c) => {
-	const params = c.req.query();
-	const requiredParams = ['response_type', 'client_id', 'redirect_uri', 'scope', 'state'];
-
-	for (const param of requiredParams) {
-		if (!params[param]) {
-			throw new HTTPException(400, { message: `Missing required parameter: ${param}` });
-		}
-	}
+authRoutes.get('/authorize', vValidator('query', AuthorizeRequestBodySchema), async (c) => {
+	const params = c.req.valid('query');
 
 	try {
 		const appContext = createAppContextFromBindings(c.env, c.executionCtx.waitUntil.bind(c.executionCtx));
@@ -44,21 +39,16 @@ authRoutes.get('/authorize', async (c) => {
 
 // callback
 // Discordからトークンを受け取る
-authRoutes.get('/callback', async (c) => {
-	const { code, state: sessionId } = c.req.query();
-
-	// パラメータのバリデーション
-	if (!code || !sessionId) {
-		throw new HTTPException(400, { message: 'Missing code or state from Discord' });
-	}
+authRoutes.get('/callback', vValidator('query', CallbackRequestBodySchema), async (c) => {
+	const params = c.req.valid('query');
 
 	try {
 		const appContext = createAppContextFromBindings(c.env);
 		const authService = new AuthService(appContext);
 
 		const result = await authService.handleCallbackRequest({
-			code,
-			sessionId,
+			code: params.code,
+			sessionId: params.state,
 		});
 
 		return c.redirect(result.redirectUrl);
