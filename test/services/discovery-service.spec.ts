@@ -23,24 +23,10 @@ describe('DiscoveryService', () => {
 	});
 
 	it('JWKS を返す (kid, alg, use を含む)', async () => {
-		// モックの公開鍵を設定
-		const mockContext = {
-			...context,
-			config: {
-				...context.config,
-				jwtPublicKey: `-----BEGIN PUBLIC KEY-----
-MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAvqMGKVCuL84WyJdRdVEA
-DTrYqgiU/Gvjko4WDiIKTiBk3+OSnkFzyoivL7+ej4JMu2L0q+AJQZB3vm/6yqaV
-JGOmXO7nRJDLdi/EgLgAt6CRCwAJ/oVX9BnUrWdXXN2eCp0HwdxDPkd1/xzc2ChG
-jTX7Q5jWV3vqicZq4WEeOAEBnHdtDSAR2PGXpaco7ZUyzsbBIg2Sk930omgN0rb3
-NG4lCyWgVw7IEod0FHuTLIc7jaSlk3fbmN76ZHidQRk/XJ8ch9fifvXzZqUs1ETE
-/0l9vkDilDfDa+DzvnpYMuStx+thEvrbPnJXIQs+1OftH5+hDcPmfNg7sPUpTF66
-uQIDAQAB
------END PUBLIC KEY-----`,
-			},
-		};
+	// ランタイム生成した鍵を使う
+	const ctxWithKeys = createTestContext(true);
 
-		const svc = new DiscoveryService(mockContext);
+	const svc = new DiscoveryService(ctxWithKeys);
 		const jwks = await svc.getJwks();
 
 		expect(Array.isArray(jwks.keys)).toBe(true);
