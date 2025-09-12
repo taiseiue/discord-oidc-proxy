@@ -2,7 +2,6 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { UserInfoService } from '../../src/services/userinfo-service';
 import { IAppContext } from '../../src/types';
 import { createTestContext } from '../test-utils';
-import { clearAllMocks } from '../mock-utils';
 
 // Discord utilsのモック
 vi.mock('../../src/utils/discord', () => ({
