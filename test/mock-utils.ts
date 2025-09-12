@@ -34,6 +34,5 @@ export const jwtMocks = {
  * すべてのモックをクリアする
  */
 export function clearAllMocks(): void {
-	Object.values(discordMocks).forEach((mock) => mock.mockClear());
-	Object.values(jwtMocks).forEach((mock) => mock.mockClear());
+	vi.clearAllMocks();
 }
