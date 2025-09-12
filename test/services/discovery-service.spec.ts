@@ -23,10 +23,10 @@ describe('DiscoveryService', () => {
 	});
 
 	it('JWKS を返す (kid, alg, use を含む)', async () => {
-	// ランタイム生成した鍵を使う
-	const ctxWithKeys = createTestContext(true);
+		// ランタイム生成した鍵を使う
+		const ctxWithKeys = createTestContext(true);
 
-	const svc = new DiscoveryService(ctxWithKeys);
+		const svc = new DiscoveryService(ctxWithKeys);
 		const jwks = await svc.getJwks();
 
 		expect(Array.isArray(jwks.keys)).toBe(true);
