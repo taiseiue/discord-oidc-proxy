@@ -1,0 +1,28 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  schedule:
+    - cron: '0 3 * * 1'
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: Test Suite
+    uses: ./.github/workflows/test.yml
+
+  codeql:
+    name: CodeQL Analysis
+    needs: test
+    uses: ./.github/workflows/codeql.yml
+    permissions:
+      contents: read
+      security-events: write
+      actions: read
+    with:
+      run-schedule: ${{ github.event_name == 'schedule' }}
