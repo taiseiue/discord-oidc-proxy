@@ -1,9 +1,7 @@
 # Discord OIDC Proxy
 The proxy that enables applications using OpenID Connect (OIDC) authentication to authenticate users through Discord's OAuth2 system.
 
-|       |        |
-|-------|--------|
-|[English](./README.md)|Japanese|
+[English](./README.md) | **Japanese**
 
 Cloudflare Workers + Hono + pnpm
 
