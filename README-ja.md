@@ -83,3 +83,12 @@ AWS Cognitoの認証方法としてDiscordを使うには、Cognito>ユーザー
 - taiseiue@wsnet.jp 宛に直接連絡する（PGP鍵は[OpenPGP](https://keys.openpgp.org/search?q=0D2E1F9F051058B2B360B34DA25AD3BFB865EC1E)から入手できます）
 
 セキュリティ脆弱性に関するIssueが作成された場合、その内容は受理しますが、該当のIssueは削除します。
+
+## Support
+このプロジェクトでは、GMO FlattSecurity社の「GMO オープンソース開発者応援プログラム」の支援を受けて、「Takumi byGMO」によるセキュリティ診断を定期的に行っています。
+
+<a href="https://flatt.tech/oss/gmo/trampoline" target="_blank"><img src="https://flatt.tech/assets/images/badges/gmo-oss.svg" height="24px"/></a>
+
+このプロジェクトが良いと思ったら、ぜひ少額のご支援をお願いします。
+
+<a href="https://www.buymeacoffee.com/taiseiue" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
