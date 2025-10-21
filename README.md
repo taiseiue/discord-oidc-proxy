@@ -1,9 +1,7 @@
 # Discord OIDC Proxy
 The proxy that enables applications using OpenID Connect (OIDC) authentication to authenticate users through Discord's OAuth2 system.
 
-|       |        |
-|-------|--------|
-|English|[Japanese](./README-ja.md)|
+**English** | [Japanese](./README-ja.md)
 
 Cloudflare Workers + Hono + pnpm
 
@@ -83,3 +81,12 @@ If you discover a security vulnerability in this software, please do NOT create 
 - Contact taiseiue@wsnet.jp directly (PGP key available from [OpenPGP](https://keys.openpgp.org/search?q=0D2E1F9F051058B2B360B34DA25AD3BFB865EC1E))
 
 If an Issue related to a security vulnerability is created, the information will be saved, but the Issue itself will be deleted.
+
+## Support
+This project receives support from GMO FlattSecurity's “GMO Open Source Developer Support Program” and regularly conducts security assessments using “Takumi byGMO.”
+
+<a href="https://flatt.tech/oss/gmo/trampoline" target="_blank"><img src="https://flatt.tech/assets/images/badges/gmo-oss.svg" height="24px"/></a>
+
+I'd be grateful if you could support this project!
+
+<a href="https://www.buymeacoffee.com/taiseiue" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
