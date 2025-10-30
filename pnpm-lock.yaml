@@ -10,10 +10,10 @@ importers:
     dependencies:
       '@hono/valibot-validator':
         specifier: ^0.5.3
-        version: 0.5.3(hono@4.7.10)(valibot@1.1.0(typescript@5.9.2))
+        version: 0.5.3(hono@4.10.4)(valibot@1.1.0(typescript@5.9.2))
       hono:
-        specifier: ^4.7.10
-        version: 4.7.10
+        specifier: ^4.10.4
+        version: 4.10.4
       jose:
         specifier: ^6.1.0
         version: 6.1.0
@@ -816,8 +816,8 @@ packages:
     resolution: {integrity: sha512-EykJT/Q1KjTWctppgIAgfSO0tKVuZUjhgMr17kqTumMl6Afv3EISleU7qZUzoXDFTAHTDC4NOoG/ZxU3EvlMPQ==}
     engines: {node: '>=8'}
 
-  hono@4.7.10:
-    resolution: {integrity: sha512-QkACju9MiN59CKSY5JsGZCYmPZkA6sIW6OFCUp7qDjZu6S6KHtJHhAc9Uy9mV9F8PJ1/HQ3ybZF2yjCa/73fvQ==}
+  hono@4.10.4:
+    resolution: {integrity: sha512-YG/fo7zlU3KwrBL5vDpWKisLYiM+nVstBQqfr7gCPbSYURnNEP9BDxEMz8KfsDR9JX0lJWDRNc6nXX31v7ZEyg==}
     engines: {node: '>=16.9.0'}
 
   html-escaper@2.0.2:
@@ -1421,9 +1421,9 @@ snapshots:
 
   '@fastify/busboy@2.1.1': {}
 
-  '@hono/valibot-validator@0.5.3(hono@4.7.10)(valibot@1.1.0(typescript@5.9.2))':
+  '@hono/valibot-validator@0.5.3(hono@4.10.4)(valibot@1.1.0(typescript@5.9.2))':
     dependencies:
-      hono: 4.7.10
+      hono: 4.10.4
       valibot: 1.1.0(typescript@5.9.2)
 
   '@img/sharp-darwin-arm64@0.33.5':
@@ -1858,7 +1858,7 @@ snapshots:
 
   has-flag@4.0.0: {}
 
-  hono@4.7.10: {}
+  hono@4.10.4: {}
 
   html-escaper@2.0.2: {}
 
