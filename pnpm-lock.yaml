@@ -10,7 +10,7 @@ importers:
     dependencies:
       '@hono/valibot-validator':
         specifier: ^0.5.3
-        version: 0.5.3(hono@4.7.10)(valibot@1.1.0(typescript@5.9.3))
+        version: 0.5.3(hono@4.7.10)(valibot@1.2.0(typescript@5.9.3))
       hono:
         specifier: ^4.7.10
         version: 4.7.10
@@ -18,8 +18,8 @@ importers:
         specifier: ^6.1.2
         version: 6.1.2
       valibot:
-        specifier: ^1.1.0
-        version: 1.1.0(typescript@5.9.3)
+        specifier: ^1.2.0
+        version: 1.2.0(typescript@5.9.3)
     devDependencies:
       '@cloudflare/vitest-pool-workers':
         specifier: ^0.8.19
@@ -1092,8 +1092,8 @@ packages:
   unenv@2.0.0-rc.21:
     resolution: {integrity: sha512-Wj7/AMtE9MRnAXa6Su3Lk0LNCfqDYgfwVjwRFVum9U7wsto1imuHqk4kTm7Jni+5A0Hn7dttL6O/zjvUvoo+8A==}
 
-  valibot@1.1.0:
-    resolution: {integrity: sha512-Nk8lX30Qhu+9txPYTwM0cFlWLdPFsFr6LblzqIySfbZph9+BFsAHsNvHOymEviUepeIW6KFHzpX8TKhbptBXXw==}
+  valibot@1.2.0:
+    resolution: {integrity: sha512-mm1rxUsmOxzrwnX5arGS+U4T25RdvpPjPN4yR0u9pUBov9+zGVtO84tif1eY4r6zWxVxu3KzIyknJy3rxfRZZg==}
     peerDependencies:
       typescript: '>=5'
     peerDependenciesMeta:
@@ -1421,10 +1421,10 @@ snapshots:
 
   '@fastify/busboy@2.1.1': {}
 
-  '@hono/valibot-validator@0.5.3(hono@4.7.10)(valibot@1.1.0(typescript@5.9.3))':
+  '@hono/valibot-validator@0.5.3(hono@4.7.10)(valibot@1.2.0(typescript@5.9.3))':
     dependencies:
       hono: 4.7.10
-      valibot: 1.1.0(typescript@5.9.3)
+      valibot: 1.2.0(typescript@5.9.3)
 
   '@img/sharp-darwin-arm64@0.33.5':
     optionalDependencies:
@@ -2168,7 +2168,7 @@ snapshots:
       pathe: 2.0.3
       ufo: 1.6.1
 
-  valibot@1.1.0(typescript@5.9.3):
+  valibot@1.2.0(typescript@5.9.3):
     optionalDependencies:
       typescript: 5.9.3
 
