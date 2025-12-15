@@ -33,11 +33,12 @@ if [ -e './wrangler.jsonc' ]; then
   esac
 fi
 
-
 echo -n DISCORD_CLIENT_ID:
 read DISCORD_CLIENT_ID
 echo -n DISCORD_CLIENT_SECRET:
 read DISCORD_CLIENT_SECRET
+echo -n TARGET_GUILD_ID:
+read TARGET_GUILD_ID
 echo -n WORKERS_KV_NAMESPACE_ID:
 read WORKERS_KV_NAMESPACE_ID
 
@@ -54,6 +55,7 @@ cp -f ./wrangler.jsonc.template ./wrangler.jsonc
 echo $OIDC_CLIENT_SECRET | pnpx wrangler secret put OIDC_CLIENT_SECRET
 echo $DISCORD_CLIENT_ID | pnpx wrangler secret put DISCORD_CLIENT_ID
 echo $DISCORD_CLIENT_SECRET | pnpx wrangler secret put DISCORD_CLIENT_SECRET
+echo $TARGET_GUILD_ID | pnpx wrangler secret put TARGET_GUILD_ID
 cat keys/jwtRS256 | pnpx wrangler secret put JWT_PRIVATE_KEY
 cat keys/jwtRS256.pub | pnpx wrangler secret put JWT_PUBLIC_KEY
 
