@@ -36,6 +36,7 @@ export function createAppContextFromBindings(env: Bindings, waitUntil?: (promise
 		oidcClientSecret: env.OIDC_CLIENT_SECRET,
 		discordClientId: env.DISCORD_CLIENT_ID,
 		discordClientSecret: env.DISCORD_CLIENT_SECRET,
+		targetGuildId: env.TARGET_GUILD_ID,
 		jwtPrivateKey: env.JWT_PRIVATE_KEY,
 		jwtPublicKey: env.JWT_PUBLIC_KEY,
 	};

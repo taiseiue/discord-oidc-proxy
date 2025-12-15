@@ -13,8 +13,14 @@ vi.mock('jose', () => ({
 	importPKCS8: vi.fn(async () => ({ type: 'private' })),
 }));
 
+// Discord utilsのモック (target guild roles)
+vi.mock('../../src/utils/discord', () => ({
+	getDiscordGuildMember: vi.fn(async () => ({ roles: ['r1'] })),
+}));
+
 // 型安全のためのimport
 import { generateIdToken } from '../../src/utils/jwt';
+import { getDiscordGuildMember } from '../../src/utils/discord';
 
 describe('TokenService', () => {
 	let context: IAppContext;
@@ -43,8 +49,13 @@ describe('TokenService', () => {
 				stored.discordUser,
 				expect.any(Object), // privateKey object
 				context.config.oidcIssuer,
-				context.config.oidcAudience
+				context.config.oidcAudience,
+				{
+					is_member_of_target_guild: true,
+					roles: ['r1'],
+				}
 			);
+			expect(getDiscordGuildMember).toHaveBeenCalledWith('disTok', context.config.targetGuildId);
 
 			// コードは削除済み
 			expect(await context.storage.get(code)).toBeNull();

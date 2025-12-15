@@ -2,6 +2,7 @@ import * as jose from 'jose';
 import { IAppContext, StoredTokenData } from '../types';
 import { TOKEN_EXPIRATION_TTL } from '../config';
 import { generateIdToken } from '../utils/jwt';
+import { getDiscordGuildMember } from '../utils/discord';
 
 export class TokenService {
 	private context: IAppContext;
@@ -24,9 +25,21 @@ export class TokenService {
 		const storedData = JSON.parse(storedDataJson) as StoredTokenData;
 		const { discordUser, discordToken } = storedData;
 
+		const member = await getDiscordGuildMember(discordToken, this.context.config.targetGuildId);
+		const extraClaims = {
+			is_member_of_target_guild: member !== null,
+			roles: member?.roles ?? [],
+		};
+
 		// IDトークンを生成する
 		const privateKey = await jose.importPKCS8(this.context.config.jwtPrivateKey, 'RS256');
-		const idToken = await generateIdToken(discordUser, privateKey, this.context.config.oidcIssuer, this.context.config.oidcAudience);
+		const idToken = await generateIdToken(
+			discordUser,
+			privateKey,
+			this.context.config.oidcIssuer,
+			this.context.config.oidcAudience,
+			extraClaims
+		);
 
 		// アクセストークンを生成する
 		const accessToken = crypto.randomUUID();

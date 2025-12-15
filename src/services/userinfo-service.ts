@@ -1,5 +1,5 @@
 import { IAppContext } from '../types';
-import { getDiscordUserInfo } from '../utils/discord';
+import { getDiscordGuildMember, getDiscordUserInfo } from '../utils/discord';
 
 export class UserInfoService {
 	private context: IAppContext;
@@ -19,6 +19,10 @@ export class UserInfoService {
 
 		const discordUser = await getDiscordUserInfo(discordToken);
 
+		const member = await getDiscordGuildMember(discordToken, this.context.config.targetGuildId);
+		const isMemberOfTargetGuild = member !== null;
+		const roles = member?.roles ?? [];
+
 		// OIDCクレームの生成
 		const claims = {
 			sub: discordUser.id,
@@ -28,6 +32,8 @@ export class UserInfoService {
 			email: discordUser.email,
 			email_verified: discordUser.verified,
 			locale: discordUser.locale,
+			is_member_of_target_guild: isMemberOfTargetGuild,
+			roles,
 		};
 
 		return claims;

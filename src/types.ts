@@ -17,6 +17,7 @@ export interface IKeyValueStorage {
  * @property {string} discordClientSecret DiscordのOAuthクライアントシークレット
  * @property {string} jwtPrivateKey JWTの秘密鍵
  * @property {string} jwtPublicKey JWTの公開鍵
+ * @property {string} targetGuildId 対象のDiscordギルドID
  */
 export interface IAppConfig {
 	oidcIssuer: string;
@@ -24,6 +25,7 @@ export interface IAppConfig {
 	oidcClientSecret: string;
 	discordClientId: string;
 	discordClientSecret: string;
+	targetGuildId: string;
 	jwtPrivateKey: string;
 	jwtPublicKey: string;
 }
@@ -56,6 +58,8 @@ export type Bindings = {
 	// JWTの秘密鍵と公開鍵
 	JWT_PRIVATE_KEY: string;
 	JWT_PUBLIC_KEY: string;
+	// 対象ギルドID
+	TARGET_GUILD_ID: string;
 };
 
 export type StoredSessionData = {
@@ -95,6 +99,14 @@ export type DiscordTokenResponse = {
 	expires_in: number;
 	refresh_token?: string;
 	scope?: string;
+};
+
+/**
+ * Discordのギルドメンバーオブジェクト(必要最小限)
+ * c.f. https://discord.com/developers/docs/resources/guild#guild-member-object
+ */
+export type DiscordGuildMember = {
+	roles: string[];
 };
 
 /**

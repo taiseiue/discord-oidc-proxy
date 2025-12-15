@@ -1,5 +1,5 @@
 import { HTTPException } from 'hono/http-exception';
-import { DiscordTokenResponse, DiscordUser } from '../types';
+import { DiscordGuildMember, DiscordTokenResponse, DiscordUser } from '../types';
 
 /**
  * Discordの認証URLを生成する
@@ -13,7 +13,7 @@ export const createDiscordAuthUrl = (clientId: string, oidcIssuer: string, sessi
 	url.searchParams.set('client_id', clientId);
 	url.searchParams.set('redirect_uri', `${oidcIssuer}/callback`);
 	url.searchParams.set('response_type', 'code');
-	url.searchParams.set('scope', 'identify email guilds');
+	url.searchParams.set('scope', 'identify email guilds guilds.members.read');
 	url.searchParams.set('state', sessionId);
 	url.searchParams.set('prompt', 'none');
 	return url;
@@ -39,6 +39,32 @@ export const getDiscordUserInfo = async (token: string): Promise<DiscordUser> =>
 	}
 
 	return response.json<DiscordUser>();
+};
+
+/**
+ * Discordの対象ギルドにおけるメンバー情報(roles等)を取得する
+ * - 404: ギルドに所属していない(または参照できない)として null
+ * - 401/403: スコープ不足などで参照不可として null
+ */
+export const getDiscordGuildMember = async (token: string, guildId: string): Promise<DiscordGuildMember | null> => {
+	const response = await fetch(`https://discord.com/api/v10/users/@me/guilds/${guildId}/member`, {
+		headers: {
+			Authorization: `Bearer ${token}`,
+			'User-Agent': 'discord-oidc-proxy',
+		},
+	});
+
+	if (response.status === 404 || response.status === 401 || response.status === 403) {
+		return null;
+	}
+
+	if (!response.ok) {
+		const errorText = await response.text();
+		console.error('Discord API Error:', errorText);
+		throw new HTTPException(502, { message: 'Failed to fetch guild member info from Discord' });
+	}
+
+	return response.json<DiscordGuildMember>();
 };
 
 /**
