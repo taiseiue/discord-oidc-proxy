@@ -40,9 +40,9 @@ Discord OIDC Proxyを動作させるためには、以下のアカウントと�
 スコープ|クレーム
 -------|------
 openid|sub
-profile|name,preferred_username,picture,locale
-email|email,email_verified
-guild|is_member_of_target_guild,roles
+profile|name, preferred_username, picture, locale
+email|email, email_verified
+guild|is_member_of_target_guild, roles
 
 ### Cloudflare Access
 Cloudflare Accessの認証方法としてDiscordを使うには、Cloudflare ZeroTrust>設定>認証>ログイン方法で新規追加をクリックし、OpenID Connect(OIDC)を選んで次のように設定します。
