@@ -13,9 +13,26 @@ export const createDiscordAuthUrl = (clientId: string, oidcIssuer: string, sessi
 	url.searchParams.set('client_id', clientId);
 	url.searchParams.set('redirect_uri', `${oidcIssuer}/callback`);
 	url.searchParams.set('response_type', 'code');
-	url.searchParams.set('scope', 'identify email guilds guilds.members.read');
+	url.searchParams.set('scope', 'identify email guilds');
 	url.searchParams.set('state', sessionId);
 	url.searchParams.set('prompt', 'none');
+	return url;
+};
+
+/**
+ * OIDC scope に guild が含まれる場合は、Discord 側でも roles 取得に必要なスコープを追加する
+ */
+export const createDiscordAuthUrlWithOidcScope = (
+	clientId: string,
+	oidcIssuer: string,
+	sessionId: string,
+	oidcScope: string
+): URL => {
+	const url = createDiscordAuthUrl(clientId, oidcIssuer, sessionId);
+	const scopes = new Set((oidcScope || '').split(/\s+/).filter(Boolean));
+	if (scopes.has('guild')) {
+		url.searchParams.set('scope', 'identify email guilds guilds.members.read');
+	}
 	return url;
 };
 

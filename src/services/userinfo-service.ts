@@ -1,4 +1,4 @@
-import { IAppContext } from '../types';
+import { IAppContext, StoredAccessTokenData } from '../types';
 import { getDiscordGuildMember, getDiscordUserInfo } from '../utils/discord';
 
 export class UserInfoService {
@@ -12,19 +12,31 @@ export class UserInfoService {
 	 * アクセストークンを使ってユーザー情報を取得する
 	 */
 	async getUserInfo(accessToken: string) {
-		const discordToken = await this.context.storage.get(`access_token:${accessToken}`);
-		if (!discordToken) {
+		const storedJson = await this.context.storage.get(`access_token:${accessToken}`);
+		if (!storedJson) {
 			throw new Error('Unauthorized: Invalid access token');
 		}
+		let stored: StoredAccessTokenData;
+		try {
+			stored = JSON.parse(storedJson) as StoredAccessTokenData;
+		} catch {
+			// 互換: 以前は discordToken をそのまま保存していた
+			stored = { discordToken: storedJson, oidcScope: '' };
+		}
+		const discordToken = stored.discordToken;
+		const scopes = new Set((stored.oidcScope || '').split(/\s+/).filter(Boolean));
+		const shouldIncludeGuildClaims = scopes.has('guild');
 
 		const discordUser = await getDiscordUserInfo(discordToken);
 
-		const member = await getDiscordGuildMember(discordToken, this.context.config.targetGuildId);
-		const isMemberOfTargetGuild = member !== null;
-		const roles = member?.roles ?? [];
+		const member = shouldIncludeGuildClaims
+			? await getDiscordGuildMember(discordToken, this.context.config.targetGuildId)
+			: null;
+		const isMemberOfTargetGuild = shouldIncludeGuildClaims ? member !== null : undefined;
+		const roles = shouldIncludeGuildClaims ? member?.roles ?? [] : undefined;
 
 		// OIDCクレームの生成
-		const claims = {
+		const claims: Record<string, unknown> = {
 			sub: discordUser.id,
 			name: discordUser.global_name || discordUser.username,
 			preferred_username: discordUser.username,
@@ -32,9 +44,11 @@ export class UserInfoService {
 			email: discordUser.email,
 			email_verified: discordUser.verified,
 			locale: discordUser.locale,
-			is_member_of_target_guild: isMemberOfTargetGuild,
-			roles,
 		};
+		if (shouldIncludeGuildClaims) {
+			claims.is_member_of_target_guild = isMemberOfTargetGuild;
+			claims.roles = roles;
+		}
 
 		return claims;
 	}

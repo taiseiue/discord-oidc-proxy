@@ -1,6 +1,6 @@
 import { IAppContext, StoredSessionData, StoredTokenData } from '../types';
 import { SESSION_EXPIRATION_TTL } from '../config';
-import { createDiscordAuthUrl, exchangeDiscordCode, getDiscordUserInfo } from '../utils/discord';
+import { createDiscordAuthUrlWithOidcScope, exchangeDiscordCode, getDiscordUserInfo } from '../utils/discord';
 
 export class AuthService {
 	private context: IAppContext;
@@ -21,12 +21,18 @@ export class AuthService {
 		const sessionId = crypto.randomUUID();
 
 		// Discordの認証URLを作る
-		const discordAuthUrl = createDiscordAuthUrl(this.context.config.discordClientId, this.context.config.oidcIssuer, sessionId);
+		const discordAuthUrl = createDiscordAuthUrlWithOidcScope(
+			this.context.config.discordClientId,
+			this.context.config.oidcIssuer,
+			sessionId,
+			params.scope
+		);
 
 		// セッションを保存
 		const sessionData: StoredSessionData = {
 			sessionState: params.state,
 			sessionRedirectUri: params.redirect_uri,
+			sessionScope: params.scope,
 		};
 
 		const storagePromise = this.context.storage.put(sessionId, JSON.stringify(sessionData), { expirationTtl: SESSION_EXPIRATION_TTL });
@@ -57,7 +63,7 @@ export class AuthService {
 		await this.context.storage.delete(params.sessionId);
 
 		const storedState = JSON.parse(storedStateJson) as StoredSessionData;
-		const { sessionState, sessionRedirectUri } = storedState;
+		const { sessionState, sessionRedirectUri, sessionScope } = storedState;
 
 		const discordTokenData = await exchangeDiscordCode(
 			params.code,
@@ -73,6 +79,7 @@ export class AuthService {
 		const tokenData: StoredTokenData = {
 			discordUser,
 			discordToken: discordTokenData.access_token,
+			oidcScope: sessionScope,
 		};
 
 		await this.context.storage.put(oidcCode, JSON.stringify(tokenData), { expirationTtl: SESSION_EXPIRATION_TTL });

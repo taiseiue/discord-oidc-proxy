@@ -33,7 +33,10 @@ describe('UserInfoService', () => {
 	describe('getUserInfo', () => {
 		it('アクセストークンから Discord 情報を取得しOIDC claimsを返す', async () => {
 			const svc = new UserInfoService(context);
-			await context.storage.put('access_token:atk1', 'discord-origin-token');
+			await context.storage.put(
+				'access_token:atk1',
+				JSON.stringify({ discordToken: 'discord-origin-token', oidcScope: 'openid profile email guild' })
+			);
 
 			const claims = await svc.getUserInfo('atk1');
 

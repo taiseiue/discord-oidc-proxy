@@ -65,11 +65,27 @@ export type Bindings = {
 export type StoredSessionData = {
 	sessionState: string;
 	sessionRedirectUri: string;
+	/**
+	 * OIDC の scope (例: "openid profile email guild")
+	 */
+	sessionScope: string;
 };
 
 export type StoredTokenData = {
 	discordUser: DiscordUser;
 	discordToken: string;
+	/**
+	 * OIDC の scope (例: "openid profile email guild")
+	 */
+	oidcScope: string;
+};
+
+/**
+ * /token で発行した access_token に紐づく情報
+ */
+export type StoredAccessTokenData = {
+	discordToken: string;
+	oidcScope: string;
 };
 
 /**

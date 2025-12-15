@@ -37,6 +37,7 @@ describe('TokenService', () => {
 			const stored: StoredTokenData = {
 				discordUser: { id: 'u1', username: 'u', avatar: 'av', email: 'u@example.com' },
 				discordToken: 'disTok',
+				oidcScope: 'openid profile email guild',
 			};
 			await context.storage.put(code, JSON.stringify(stored));
 
@@ -62,8 +63,11 @@ describe('TokenService', () => {
 
 			// アクセストークンが保存されていることを確認
 			const accessTokenKey = `access_token:${res.access_token}`;
-			const savedDiscordToken = await context.storage.get(accessTokenKey);
-			expect(savedDiscordToken).toBe('disTok');
+			const saved = await context.storage.get(accessTokenKey);
+			expect(saved).not.toBeNull();
+			const parsed = JSON.parse(saved || '{}');
+			expect(parsed.discordToken).toBe('disTok');
+			expect(parsed.oidcScope).toContain('guild');
 		});
 
 		it('不正なコードならエラー', async () => {

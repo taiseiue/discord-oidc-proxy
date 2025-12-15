@@ -1,13 +1,15 @@
 # Discord OIDC Proxy
-The proxy that enables applications using OpenID Connect (OIDC) authentication to authenticate users through Discord's OAuth2 system.
+OpenID Connect (OIDC) 認証を使用するアプリケーションが、DiscordのOAuth2システムを通じてユーザーを認証できるようにするプロキシ
 
 [English](./README.md) | **Japanese**
 
 Cloudflare Workers + Hono + pnpm
 
 ## What's this?
+discord-oidc-proxyは、OpenID Connect (OIDC)認証を使用するアプリケーションがDiscordのアカウントを使用してユーザーを認証できるようにする、Cloudflare Workers上で動作するプロキシです。
 
-discord-oidc-proxyは、OpenID Connect (OIDC)認証を使用するアプリケーションがDiscordのOAuth2システムを介してユーザーを認証できるようにする、Cloudflare Workers上で動作するプロキシです。
+discord-oidc-proxyを使用すると、Discordに登録されているユーザー名、ユーザーID、メールアドレスや、事前に設定したサーバー(ギルド)に所属しているか、ロールIDなどを基にアプリケーションで認証認可を行うことができます。
+
 Discord APIはOAuth2エンドポイントのみを提供し、OIDC準拠のエンドポイントは提供していないため、標準的なOIDCフローを想定するアプリケーションとの互換性に問題が生じます。
 このプロキシはOIDC準拠のエンドポイント（検出、認可、トークン、ユーザー情報）を公開しながら、内部的にはDiscordのOAuth2認証を管理します。これにより、Discord固有のOAuth2実装に対応するための変更を加えることなく、OIDCクライアントで簡単にDiscord認証を組み込めます。
 
@@ -32,6 +34,16 @@ Discord OIDC Proxyを動作させるためには、以下のアカウントと�
 8.  `pnpm release`して完了です。
 
 ## Usage for Clients
+### スコープについて
+スコープと取得できるクレームの対応を以下に示します。
+
+スコープ|クレーム
+-------|------
+openid|sub
+profile|name,preferred_username,picture,locale
+email|email,email_verified
+guild|is_member_of_target_guild,roles
+
 ### Cloudflare Access
 Cloudflare Accessの認証方法としてDiscordを使うには、Cloudflare ZeroTrust>設定>認証>ログイン方法で新規追加をクリックし、OpenID Connect(OIDC)を選んで次のように設定します。
 
@@ -69,7 +81,7 @@ AWS Cognitoの認証方法としてDiscordを使うには、Cognito>ユーザー
 プロバイダー名|Discord
 クライアント ID|1234567890123
 クライアントシークレット|My.....secret
-許可されたスコープ|openid email profile identify
+許可されたスコープ|openid email profile guild
 属性のリクエストメソッド|POST
 セットアップ方法|発行者 URL を通じた自動入力
 発行者 URL|デプロイ先Url

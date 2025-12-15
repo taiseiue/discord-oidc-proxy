@@ -5,7 +5,7 @@ import { createTestContext } from '../test-utils';
 
 // Discord utilsのモック
 vi.mock('../../src/utils/discord', () => ({
-	createDiscordAuthUrl: vi.fn((clientId: string, issuer: string, sessionId: string) => {
+	createDiscordAuthUrlWithOidcScope: vi.fn((clientId: string, issuer: string, sessionId: string, _oidcScope: string) => {
 		return new URL(`https://discord.example.com/oauth2?client_id=${clientId}&redirect_uri=${issuer}/callback&state=${sessionId}`);
 	}),
 	exchangeDiscordCode: vi.fn(async () => ({
@@ -24,7 +24,7 @@ vi.mock('../../src/utils/discord', () => ({
 }));
 
 // 型安全のためのimport
-import { createDiscordAuthUrl, exchangeDiscordCode, getDiscordUserInfo } from '../../src/utils/discord';
+import { createDiscordAuthUrlWithOidcScope, exchangeDiscordCode, getDiscordUserInfo } from '../../src/utils/discord';
 
 describe('AuthService', () => {
 	let context: IAppContext;
@@ -52,7 +52,13 @@ describe('AuthService', () => {
 			const stored = JSON.parse(storedRaw || '{}') as StoredSessionData;
 			expect(stored.sessionState).toBe('xyz');
 			expect(stored.sessionRedirectUri).toBe('https://rp.example.com/cb');
-			expect(createDiscordAuthUrl).toHaveBeenCalledWith(context.config.discordClientId, context.config.oidcIssuer, res.sessionId);
+			expect(stored.sessionScope).toBe('openid');
+			expect(createDiscordAuthUrlWithOidcScope).toHaveBeenCalledWith(
+				context.config.discordClientId,
+				context.config.oidcIssuer,
+				res.sessionId,
+				'openid'
+			);
 		});
 	});
 
@@ -65,6 +71,7 @@ describe('AuthService', () => {
 			const session: StoredSessionData = {
 				sessionState: 'orig-state',
 				sessionRedirectUri: 'https://rp.example.com/cb',
+				sessionScope: 'openid profile',
 			};
 			await context.storage.put(sessionId, JSON.stringify(session));
 
