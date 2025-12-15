@@ -13,8 +13,14 @@ vi.mock('jose', () => ({
 	importPKCS8: vi.fn(async () => ({ type: 'private' })),
 }));
 
+// Discord utilsのモック (target guild roles)
+vi.mock('../../src/utils/discord', () => ({
+	getDiscordGuildMember: vi.fn(async () => ({ roles: ['r1'] })),
+}));
+
 // 型安全のためのimport
 import { generateIdToken } from '../../src/utils/jwt';
+import { getDiscordGuildMember } from '../../src/utils/discord';
 
 describe('TokenService', () => {
 	let context: IAppContext;
@@ -31,6 +37,7 @@ describe('TokenService', () => {
 			const stored: StoredTokenData = {
 				discordUser: { id: 'u1', username: 'u', avatar: 'av', email: 'u@example.com' },
 				discordToken: 'disTok',
+				oidcScope: 'openid profile email guild',
 			};
 			await context.storage.put(code, JSON.stringify(stored));
 
@@ -43,16 +50,24 @@ describe('TokenService', () => {
 				stored.discordUser,
 				expect.any(Object), // privateKey object
 				context.config.oidcIssuer,
-				context.config.oidcAudience
+				context.config.oidcAudience,
+				{
+					is_member_of_target_guild: true,
+					roles: ['r1'],
+				}
 			);
+			expect(getDiscordGuildMember).toHaveBeenCalledWith('disTok', context.config.targetGuildId);
 
 			// コードは削除済み
 			expect(await context.storage.get(code)).toBeNull();
 
 			// アクセストークンが保存されていることを確認
 			const accessTokenKey = `access_token:${res.access_token}`;
-			const savedDiscordToken = await context.storage.get(accessTokenKey);
-			expect(savedDiscordToken).toBe('disTok');
+			const saved = await context.storage.get(accessTokenKey);
+			expect(saved).not.toBeNull();
+			const parsed = JSON.parse(saved || '{}');
+			expect(parsed.discordToken).toBe('disTok');
+			expect(parsed.oidcScope).toContain('guild');
 		});
 
 		it('不正なコードならエラー', async () => {

@@ -9,7 +9,8 @@ export const generateIdToken = async (
 	discordUser: DiscordUser,
 	privateKey: jose.CryptoKey,
 	issuer: string,
-	audience: string
+	audience: string,
+	extraClaims: Record<string, unknown> = {}
 ): Promise<string> => {
 	const now = Math.floor(Date.now() / 1000);
 
@@ -18,6 +19,7 @@ export const generateIdToken = async (
 		picture: `https://cdn.discordapp.com/avatars/${discordUser.id}/${discordUser.avatar}.png`,
 		email: discordUser.email,
 		email_verified: discordUser.verified,
+		...extraClaims,
 	})
 		.setProtectedHeader({ alg: 'RS256', kid: 'main' })
 		.setSubject(discordUser.id)

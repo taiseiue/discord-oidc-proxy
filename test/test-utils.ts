@@ -33,6 +33,7 @@ export const testConfig = {
 	oidcClientSecret: 'unused',
 	discordClientId: 'discId',
 	discordClientSecret: 'discSecret',
+	targetGuildId: 'target-guild-id',
 	jwtPrivateKey: 'test-private-key',
 	jwtPublicKey: 'test-public-key',
 };

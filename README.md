@@ -6,10 +6,12 @@ The proxy that enables applications using OpenID Connect (OIDC) authentication t
 Cloudflare Workers + Hono + pnpm
 
 ## What's this?
+discord-oidc-proxy is a proxy that runs on Cloudflare Workers, allowing applications that use OpenID Connect (OIDC) authentication to authenticate users using their Discord accounts.
 
-discord-oidc-proxy is a proxy running on Cloudflare Workers that enables applications using OpenID Connect (OIDC) authentication to authenticate users through Discord's OAuth2 system.
-The Discord API only provides OAuth2 endpoints and does not provide OIDC-compliant endpoints, which causes compatibility issues with applications that assume a standard OIDC flow.
-This proxy exposes OIDC-compliant endpoints (discovery, authorization, token, user information) while internally managing Discord's OAuth2 authentication. This allows OIDC clients to easily integrate Discord authentication without making changes to accommodate Discord's proprietary OAuth2 implementation.
+With discord-oidc-proxy, you can perform authentication and authorization in your application based on Discord usernames, user IDs, email addresses, whether the user belongs to a pre-configured server (guild), or role IDs.
+
+The Discord API only provides OAuth2 endpoints and does not provide OIDC-compliant endpoints. This causes compatibility issues with applications that expect a standard OIDC flow.
+This proxy exposes OIDC-compliant endpoints (discovery, authorization, token, userinfo) while internally managing Discord's OAuth2 authentication. This allows for easy integration of Discord authentication with OIDC clients without requiring modifications to accommodate Discord's specific OAuth2 implementation.
 
 ## Requirements
 To run Discord OIDC Proxy, you need the following accounts and software:
@@ -32,6 +34,15 @@ To run Discord OIDC Proxy, you need the following accounts and software:
 8. Run `pnpm release` to complete.
 
 ## Usage for Clients
+### About Scopes
+The following shows the correspondence between scopes and retrievable claims.
+
+Scope | Claims
+-------|------
+openid | sub
+profile | name, preferred_username, picture, locale
+email | email, email_verified
+guild | is_member_of_target_guild, roles
 ### Cloudflare Access
 To use Discord as the authentication method for Cloudflare Access, click Add New under Cloudflare ZeroTrust > Settings > Authentication > Login Methods, select OpenID Connect (OIDC), and configure the settings as follows.
 
