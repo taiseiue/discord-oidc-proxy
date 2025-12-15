@@ -52,12 +52,12 @@ echo 'Done!'
 echo;
 echo '[2/3] Configuring...'
 cp -f ./wrangler.jsonc.template ./wrangler.jsonc
-echo $OIDC_CLIENT_SECRET | pnpx wrangler secret put OIDC_CLIENT_SECRET
-echo $DISCORD_CLIENT_ID | pnpx wrangler secret put DISCORD_CLIENT_ID
-echo $DISCORD_CLIENT_SECRET | pnpx wrangler secret put DISCORD_CLIENT_SECRET
-echo $TARGET_GUILD_ID | pnpx wrangler secret put TARGET_GUILD_ID
-cat keys/jwtRS256 | pnpx wrangler secret put JWT_PRIVATE_KEY
-cat keys/jwtRS256.pub | pnpx wrangler secret put JWT_PUBLIC_KEY
+echo $OIDC_CLIENT_SECRET | pnpm dlx wrangler secret put OIDC_CLIENT_SECRET
+echo $DISCORD_CLIENT_ID | pnpm dlx wrangler secret put DISCORD_CLIENT_ID
+echo $DISCORD_CLIENT_SECRET | pnpm dlx wrangler secret put DISCORD_CLIENT_SECRET
+echo $TARGET_GUILD_ID | pnpm dlx wrangler secret put TARGET_GUILD_ID
+cat keys/jwtRS256 | pnpm dlx wrangler secret put JWT_PRIVATE_KEY
+cat keys/jwtRS256.pub | pnpm dlx wrangler secret put JWT_PUBLIC_KEY
 
 if [[ "$(uname)" == "Darwin" ]]; then
   sed -i "" 's/"id": "[^"]*"/"id": "'"${WORKERS_KV_NAMESPACE_ID}"'"/g' "wrangler.jsonc"
