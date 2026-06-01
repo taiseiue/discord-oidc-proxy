@@ -22,18 +22,23 @@ To run Discord OIDC Proxy, you need the following accounts and software:
 - Signed-in [wrangler](https://developers.cloudflare.com/workers/wrangler/) (Cloudflare Workers CLI) (can be logged in with `wrangler login`)
 - OpenSSL
 
-## Usage for Server
+## Installation
+1. First, access the [Discord Developer Portal](https://discord.com/developers/applications) and create an Application with the following settings.
 
-1. Access the [Discord Developer Portal](https://discord.com/developers/applications) and create an application.
-2. Open the OAuth2 page and make a note of the Client ID and Client Secret.
-3. Run `pnpx wrangler kv namespace create “AUTH_KV”` to create Workers KV.
+Setting Item | Value
+-------|--
+OAuth2 > Redirect Url | `https://<YOUR_WORKERS>.workers.dev/callback`
+OAuth2 > Scopes | `identify`, `email`, `guilds`
+
+2. Open the OAuth2 page and take note of the Client ID and Client Secret.
+3. Run `pnpx wrangler kv namespace create "AUTH_KV"` to create the Workers KV.
 4. Replace `<YOUR_KV_NAMESPACE_ID>` in `wrangler.jsonc` with the generated KV ID.
-5. Run `setup.sh` and follow the instructions to enter the Client ID and Client Secret. Make a note of the generated OIDC Client ID and OIDC Client Secret.
+5. Run `setup.sh` and follow the instructions to enter the Client ID and Client Secret. At this time, take note of the generated OIDC Client ID and OIDC Client Secret.
 6. Run `pnpm install && pnpm release` once.
-7. Replace `https://<YOUR_WORKERS>.workers.dev` in `wrangler.jsonc` with the displayed deployment URL (`https://hoge.workers.dev`).
-8. Run `pnpm release` to complete.
+7. Replace `https://<YOUR_WORKERS>.workers.dev` in `wrangler.jsonc` with the displayed deployment URL (e.g., `https://hoge.workers.dev`).
+8. Run `pnpm release` and you are done.
 
-## Usage for Clients
+## Usage
 ### About Scopes
 The following shows the correspondence between scopes and retrievable claims.
 
