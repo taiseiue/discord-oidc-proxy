@@ -1,8 +1,8 @@
-ignoredBuiltDependencies:
-  - sharp
-onlyBuiltDependencies:
-  - esbuild
-  - workerd
+allowBuilds:
+  esbuild: false
+  sharp: true
+  workerd: true
+
 
 packages:
   - '.'
