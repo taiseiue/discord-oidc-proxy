@@ -10,10 +10,10 @@ importers:
     dependencies:
       '@hono/valibot-validator':
         specifier: ^0.6.1
-        version: 0.6.1(hono@4.12.25)(valibot@1.4.1(typescript@6.0.3))
+        version: 0.6.1(hono@4.12.27)(valibot@1.4.1(typescript@6.0.3))
       hono:
-        specifier: ^4.12.23
-        version: 4.12.25
+        specifier: ^4.12.26
+        version: 4.12.27
       jose:
         specifier: ^6.2.3
         version: 6.2.3
@@ -1179,8 +1179,8 @@ packages:
     resolution: {integrity: sha512-EykJT/Q1KjTWctppgIAgfSO0tKVuZUjhgMr17kqTumMl6Afv3EISleU7qZUzoXDFTAHTDC4NOoG/ZxU3EvlMPQ==}
     engines: {node: '>=8'}
 
-  hono@4.12.25:
-    resolution: {integrity: sha512-2NFaIyNVgJmBs/ecmtGzlmluTFs5cHEWGTdu0t1HBwYzoGXOL5nUQBRMXsXWla5i4KkG//QMzVP88m1+I3fdAQ==}
+  hono@4.12.27:
+    resolution: {integrity: sha512-1yrb/+w6HWQJrUCLkJ2IF5jNIPvvFkblV5RNOYl6bV+OA6p9GLcMpHFFGTosSvHvcAUibuUukRqhlYI4z32C7Q==}
     engines: {node: '>=16.9.0'}
 
   html-escaper@2.0.2:
@@ -1848,9 +1848,9 @@ snapshots:
   '@esbuild/win32-x64@0.27.7':
     optional: true
 
-  '@hono/valibot-validator@0.6.1(hono@4.12.25)(valibot@1.4.1(typescript@6.0.3))':
+  '@hono/valibot-validator@0.6.1(hono@4.12.27)(valibot@1.4.1(typescript@6.0.3))':
     dependencies:
-      hono: 4.12.25
+      hono: 4.12.27
       valibot: 1.4.1(typescript@6.0.3)
 
   '@img/colour@1.1.0': {}
@@ -2411,7 +2411,7 @@ snapshots:
 
   has-flag@4.0.0: {}
 
-  hono@4.12.25: {}
+  hono@4.12.27: {}
 
   html-escaper@2.0.2: {}
 
