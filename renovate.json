@@ -1,6 +1,71 @@
 {
-	"$schema": "https://docs.renovatebot.com/renovate-schema.json",
-	"extends": ["config:recommended"],
-  	"rangeStrategy": "bump",
-	"dependencyDashboard": true
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:recommended"],
+  "rangeStrategy": "bump",
+  "dependencyDashboard": true,
+  "minimumReleaseAge": "3 days",
+  "osvVulnerabilityAlerts": true,
+  "vulnerabilityAlerts": {
+    "labels": ["security"],
+    "assignees": ["taiseiue"]
+  },
+  "packageRules": [
+    {
+      "description": "devDependencies の patch/minor/digest は自動マージ",
+      "matchDepTypes": ["devDependencies"],
+      "matchUpdateTypes": ["patch", "minor", "digest"],
+      "automerge": true
+    },
+    {
+      "description": "devDependencies の major は手動レビュー",
+      "matchDepTypes": ["devDependencies"],
+      "matchUpdateTypes": ["major"],
+      "automerge": false,
+      "assignees": ["taiseiue"],
+      "labels": ["renovate/major"]
+    },
+    {
+      "description": "本体依存(hono/jose/valibot等)の patch は自動マージ",
+      "matchDepTypes": ["dependencies"],
+      "matchUpdateTypes": ["patch"],
+      "automerge": true
+    },
+    {
+      "description": "本体依存の minor/major は手動レビュー(認証基盤のため)",
+      "matchDepTypes": ["dependencies"],
+      "matchUpdateTypes": ["minor", "major"],
+      "automerge": false,
+      "assignees": ["taiseiue"],
+      "labels": ["renovate/needs-review"]
+    },
+    {
+      "description": "GitHub Actions はコミットSHAに固定(サプライチェーン対策)",
+      "matchManagers": ["github-actions"],
+      "pinDigests": true
+    },
+    {
+      "description": "GitHub Actions の digest/patch/minor は自動マージ",
+      "matchManagers": ["github-actions"],
+      "matchUpdateTypes": ["digest", "patch", "minor"],
+      "automerge": true
+    },
+    {
+      "description": "GitHub Actions の major は手動レビュー",
+      "matchManagers": ["github-actions"],
+      "matchUpdateTypes": ["major"],
+      "automerge": false,
+      "assignees": ["taiseiue"],
+      "labels": ["renovate/major"]
+    },
+    {
+      "description": "major 更新はリリースから14日待って提案(供給網リスク低減)",
+      "matchUpdateTypes": ["major"],
+      "minimumReleaseAge": "14 days"
+    }
+  ],
+  "lockFileMaintenance": {
+    "enabled": true,
+    "automerge": true,
+    "schedule": ["before 6am on monday"]
+  }
 }
