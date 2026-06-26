@@ -12,7 +12,7 @@ importers:
         specifier: ^0.6.1
         version: 0.6.1(hono@4.12.27)(valibot@1.4.1(typescript@6.0.3))
       hono:
-        specifier: ^4.12.26
+        specifier: ^4.12.27
         version: 4.12.27
       jose:
         specifier: ^6.2.3
