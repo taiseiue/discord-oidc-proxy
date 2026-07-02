@@ -10,7 +10,7 @@ importers:
     dependencies:
       '@hono/valibot-validator':
         specifier: ^0.6.1
-        version: 0.6.1(hono@4.12.27)(valibot@1.4.1(typescript@6.0.3))
+        version: 0.6.1(hono@4.12.27)(valibot@1.4.2(typescript@6.0.3))
       hono:
         specifier: ^4.12.27
         version: 4.12.27
@@ -18,8 +18,8 @@ importers:
         specifier: ^6.2.3
         version: 6.2.3
       valibot:
-        specifier: ^1.4.1
-        version: 1.4.1(typescript@6.0.3)
+        specifier: ^1.4.2
+        version: 1.4.2(typescript@6.0.3)
     devDependencies:
       '@cloudflare/vitest-pool-workers':
         specifier: ^0.11.1
@@ -1581,8 +1581,8 @@ packages:
   unenv@2.0.0-rc.24:
     resolution: {integrity: sha512-i7qRCmY42zmCwnYlh9H2SvLEypEFGye5iRmEMKjcGi7zk9UquigRjFtTLz0TYqr0ZGLZhaMHl/foy1bZR+Cwlw==}
 
-  valibot@1.4.1:
-    resolution: {integrity: sha512-klCmFTz2jeDluy9RwX+F884TCiogtdBJ/YaxSx1EOBYXa3NXNWj8kR1jjN8rzluwojJVWWaHJ4r1U5LfICnM3g==}
+  valibot@1.4.2:
+    resolution: {integrity: sha512-gjdCvJ6d3RyHAneqxMYMW9QMCwYMb3jpOO0IyHZV1bnRHFBHrX3VkIILt5XYR0WhwHiH7Mty8ovuPZ/O3gamrg==}
     peerDependencies:
       typescript: '>=5'
     peerDependenciesMeta:
@@ -2085,10 +2085,10 @@ snapshots:
   '@esbuild/win32-x64@0.28.1':
     optional: true
 
-  '@hono/valibot-validator@0.6.1(hono@4.12.27)(valibot@1.4.1(typescript@6.0.3))':
+  '@hono/valibot-validator@0.6.1(hono@4.12.27)(valibot@1.4.2(typescript@6.0.3))':
     dependencies:
       hono: 4.12.27
-      valibot: 1.4.1(typescript@6.0.3)
+      valibot: 1.4.2(typescript@6.0.3)
 
   '@img/colour@1.1.0': {}
 
@@ -2975,7 +2975,7 @@ snapshots:
     dependencies:
       pathe: 2.0.3
 
-  valibot@1.4.1(typescript@6.0.3):
+  valibot@1.4.2(typescript@6.0.3):
     optionalDependencies:
       typescript: 6.0.3
 
