@@ -25,7 +25,7 @@ importers:
         specifier: ^0.11.1
         version: 0.11.1(@cloudflare/workers-types@4.20260701.1)(@vitest/runner@3.2.6)(@vitest/snapshot@3.2.6)(vitest@3.2.6)
       '@cloudflare/workers-types':
-        specifier: ^4.20260629.1
+        specifier: ^4.20260630.1
         version: 4.20260701.1
       '@vitest/coverage-v8':
         specifier: 3.2.6
