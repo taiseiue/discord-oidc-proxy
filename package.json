@@ -22,7 +22,7 @@
 		"chai": "^6.2.2",
 		"typescript": "^7.0.2",
 		"vitest": "~3.2.7",
-		"wrangler": "^4.118.0"
+		"wrangler": "^4.119.0"
 	},
 	"dependencies": {
 		"@hono/valibot-validator": "^0.6.1",
