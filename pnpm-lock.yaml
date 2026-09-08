@@ -15,7 +15,7 @@ importers:
         specifier: ^4.13.7
         version: 4.13.7
       jose:
-        specifier: ^6.2.11
+        specifier: ^6.2.12
         version: 6.2.12
       valibot:
         specifier: ^1.4.2
