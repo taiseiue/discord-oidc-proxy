@@ -40,7 +40,7 @@ importers:
         specifier: ~3.2.7
         version: 3.2.7(supports-color@10.2.2)
       wrangler:
-        specifier: ^4.156.2
+        specifier: ^4.157.0
         version: 4.157.0(@cloudflare/workers-types@5.20261104.1)
 
 packages:
